@@ -1,6 +1,6 @@
 import reflex as rx
 from requests import get, post
-from rxconfig import config
+import rxconfig
 
 class SigninState(rx.State):
     Email:str
@@ -8,13 +8,13 @@ class SigninState(rx.State):
     Password:str
 
     def sign_in(self) -> int:
-        signin = post(config.api_url+"/api/auth/signup", json={
+        signin = post(rxconfig._backend_url+"/api/auth/signup", json={
             "email":self.Email,
             "username":self.Username,
             "password":self.Password
         })
 
-        return rx.redirect("verify/") if signin.status_code == 200 else rx.redirect("/")
+        return rx.redirect("verify") if signin.status_code == 200 else rx.redirect("/")
     
 class LoginState(rx.State):
     Username:str = rx.LocalStorage()
@@ -26,7 +26,7 @@ class LoginState(rx.State):
 
     def login(self):
         self.Username = self.Local_Username
-        login = post(config.api_url+"/api/auth/login", json={
+        login = post(rxconfig._backend_url+"/api/auth/login", json={
             "username":self.Username,
             "password":self.Password
         })
@@ -34,10 +34,10 @@ class LoginState(rx.State):
             self.JWT_Token = login.json()["authenticationToken"]
             self.Auth_token = login.json()["refreshToken"]
             self.Logged_in = True
-            return rx.redirect("feed/")
+            return rx.redirect("feed")
     
     def logout(self):
-        logout = post(config.api_url+"/api/auth/logout", json={
+        logout = post(rxconfig._backend_url+"/api/auth/logout", json={
             "refreshToken": self.Auth_token,
             "username": self.Username
         })
@@ -46,4 +46,4 @@ class LoginState(rx.State):
             self.Logged_in = False
             self.Local_Username = ""
             self.Auth_token = ""
-            return rx.redirect("/feed")
+            return rx.redirect("feed")

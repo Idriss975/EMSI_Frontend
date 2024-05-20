@@ -98,6 +98,7 @@ def signup():
         padding_left="0",
     )
 
+@rx.page(route="feed", title="Home")
 @rx.page(route="feed/[id]", title="Home")
 def feed():
     text = """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in neque nulla. In sit amet facilisis augue, id eleifend dui. Vivamus lobortis commodo iaculis. Morbi a pulvinar massa. Sed sed interdum nulla. Integer non mattis lacus, sed interdum diam. Integer cursus justo purus, at egestas neque sodales quis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In iaculis, nibh eget vestibulum pharetra, diam felis sagittis nisi, eget molestie est purus ac ipsum. Vestibulum rhoncus maximus neque. Suspendisse nec euismod augue. Nullam vel urna sit amet erat rutrum iaculis a vitae ipsum. Aliquam non orci at urna faucibus malesuada nec quis velit. Donec hendrerit, risus non aliquam scelerisque, odio magna egestas ex, id posuere purus dui ac est. Mauris consectetur ut justo at sodales.
@@ -116,6 +117,7 @@ Fusce ac felis augue. Nulla ut est nunc. Sed sit amet dolor libero. Phasellus le
         Post.Post("test","Title", text, 5),
         Post.Post("test","Title", text, 5),
         Post.Post("test","Title", text, 5),
+        #rx.text(P.PostState.Get_Topic()),
         Footer.footer(),
 
         width="100%",

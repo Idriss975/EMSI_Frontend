@@ -8,6 +8,9 @@ class PostModel:
         self.title = title
         self.text = text
         
+
 class PostState(rx.State):
-    ...
+    #@rx.var
+    def Get_Topic(self):
+        ... #return self.router.page.params.get("id", "no id")
     #@rx.var    self.router.page.params.get("pid", "no pid")
