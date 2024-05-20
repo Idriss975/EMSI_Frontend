@@ -7,35 +7,13 @@ from rxconfig import config
 
 
 class IndexState(rx.State):
-    ...
+    def page_redirect(self):
+        return rx.redirect("feed/")
 
 
-@rx.page(route="/", title="Feed")
-def index() -> rx.Component:
-    # Welcome Page (Index)
-    return rx.container(
-        Header.header(),
-        rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
-            ),
-            rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
-            ),
-            spacing="5",
-            justify="center",
-            min_height="85vh",
-        ),
-        Footer.footer(),
-
-
-        padding_top="0"
-    )
+@rx.page(route="/", title="Index", on_load=IndexState.page_redirect)
+def index():
+    return rx.text("Redirecting ...") 
 
 
 
