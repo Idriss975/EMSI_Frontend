@@ -1,9 +1,11 @@
 import reflex as rx
-from .Components import Header, Footer, Post
+from .Components import Header, Footer, Post, Topic
 from .Services import Authentication, Feed
 from .Services import Post as P
 
+
 from rxconfig import config
+from typing import Dict
 
 
 class IndexState(rx.State):
@@ -98,31 +100,32 @@ def signup():
         padding_left="0",
     )
 
-@rx.page(route="feed", title="Home")
-@rx.page(route="feed/[id]", title="Home")
-def feed():
-    text = """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in neque nulla. In sit amet facilisis augue, id eleifend dui. Vivamus lobortis commodo iaculis. Morbi a pulvinar massa. Sed sed interdum nulla. Integer non mattis lacus, sed interdum diam. Integer cursus justo purus, at egestas neque sodales quis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In iaculis, nibh eget vestibulum pharetra, diam felis sagittis nisi, eget molestie est purus ac ipsum. Vestibulum rhoncus maximus neque. Suspendisse nec euismod augue. Nullam vel urna sit amet erat rutrum iaculis a vitae ipsum. Aliquam non orci at urna faucibus malesuada nec quis velit. Donec hendrerit, risus non aliquam scelerisque, odio magna egestas ex, id posuere purus dui ac est. Mauris consectetur ut justo at sodales.
 
-Fusce ac felis augue. Nulla ut est nunc. Sed sit amet dolor libero. Phasellus lectus enim, convallis a risus vitae, tempus dictum tortor. Curabitur ornare scelerisque nulla, vitae feugiat felis tristique non. Etiam lorem lorem, accumsan vitae leo rhoncus, aliquam sollicitudin tellus. Morbi quis mi metus. Duis a justo in diam gravida lacinia at ac lorem. Nam ac nisl in dolor viverra commodo ut eu sapien. Etiam ac tortor id eros gravida bibendum a quis massa.
-"""
+class FeedPageState(rx.State):
+
+    @rx.var
+    def post_id(self) -> str:
+        return self.router.page.params.get("id", "no id")#
+    
+
+    
+@rx.page(route="feed", title="Home")
+@rx.page(route="feed/[id]", title="Home", on_load=Feed.FeedState.getallfeed)
+def feed():
     return rx.flex(
         Header.header(),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        Post.Post("test","Title", text, 5),
-        #rx.text(P.PostState.Get_Topic()),
+        rx.flex(
+            rx.foreach(Feed.FeedState.Topics, lambda x : Topic.Topic(x["name"], x["description"], x["numberOfPosts"])),
+
+            margin_left="2rem",
+            margin_right="2rem",
+        ),
         Footer.footer(),
 
         width="100%",
         direction="column",
         align="stretch",
+
     )
 
 @rx.page(route="verify/", title="Email Verification")

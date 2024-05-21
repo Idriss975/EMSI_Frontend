@@ -9,7 +9,7 @@ from ..Services.Authentication import *
 def header(Topicname:str="Feed") -> rx.Component :
     return rx.container(
             rx.hstack(
-                rx.heading("EMSITalk"),
+                rx.heading("EMSITalk",size="7"),
 
                 rx.spacer(),
                 rx.heading(Topicname,size="5"),
@@ -34,8 +34,8 @@ def header(Topicname:str="Feed") -> rx.Component :
         top="0",
         position="sticky",
         z_index="1",
-        background_color=rx.cond(color_mode == "light", "#f9f9f9", "#5b5bd6"),
+        background_color=rx.color_mode_cond(light="#f9f9f9", dark="#5b5bd6"),
         border_radius="0px 0px 40px 40px",
         border_bottom="1px solid",
-        border_color=rx.cond(color_mode == "light","black","white"),
+        border_color=rx.color_mode_cond(light="black", dark="white"),
     )

@@ -1,6 +1,7 @@
 import reflex as rx
 from requests import get, post
-from rxconfig import config
+import rxconfig
+from json import dumps
 
 class PostModel:
     def __init__(self, username:str, title:str, text:str):
@@ -10,7 +11,9 @@ class PostModel:
         
 
 class PostState(rx.State):
-    #@rx.var
+    
+
+    @rx.var
     def Get_Topic(self):
-        ... #return self.router.page.params.get("id", "no id")
+        ...
     #@rx.var    self.router.page.params.get("pid", "no pid")
