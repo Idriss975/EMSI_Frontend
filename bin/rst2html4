@@ -1,4 +1,4 @@
-#!/home/Idriss/Development/Pain/reflex-EMSITALK/bin/python
+#!/home/Idriss/Development/Pain/EMSITalk/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
