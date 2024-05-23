@@ -4,12 +4,15 @@ from reflex.style import color_mode
 from ..Services.Authentication import *
 
 
-
+class HeaderState(rx.State):
+    
+    def Heading_onclick(self):
+        return rx.redirect("feed/")
 
 def header(Topicname:str="Feed") -> rx.Component :
     return rx.container(
             rx.hstack(
-                rx.heading("EMSITalk",size="7"),
+                rx.heading("EMSITalk",size="7", on_click=HeaderState.Heading_onclick),
 
                 rx.spacer(),
                 rx.heading(Topicname,size="5"),

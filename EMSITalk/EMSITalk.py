@@ -17,11 +17,6 @@ class IndexState(rx.State):
 def index():
     return rx.text("Redirecting ...") 
 
-
-
-
-
-
 @rx.page(route="login", title="Log in")
 def login():
     return rx.container(
@@ -51,6 +46,7 @@ def login():
         padding="1rem",
         row_gap="1rem",
         
+        
         ),
 
         Footer.footer(),
@@ -59,6 +55,7 @@ def login():
         padding_top="0",
         padding_right="0",
         padding_left="0",
+        
     )
 
 
@@ -105,12 +102,12 @@ class FeedPageState(rx.State):
 
     @rx.var
     def post_id(self) -> str:
-        return self.router.page.params.get("id", "no id")#
+        return self.router.page.params.get("id", "no id")
     
 
     
-@rx.page(route="feed", title="Home")
-@rx.page(route="feed/[id]", title="Home", on_load=Feed.FeedState.getallfeed)
+@rx.page(route="feed", title="Home", on_load=Feed.FeedState.getallfeed)
+@rx.page(route="feed/[id]", title="Home",)
 def feed():
     return rx.flex(
         Header.header(),

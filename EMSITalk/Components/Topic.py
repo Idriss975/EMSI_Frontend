@@ -6,7 +6,7 @@ from reflex.style import color_mode
 
 def Topic(topicname:str,
          description:str,
-         numofPosts:int)-> rx.Component:
+         numofPosts:str)-> rx.Component:
 
 
     return rx.card(
@@ -16,7 +16,8 @@ def Topic(topicname:str,
                     size="9",
                     fallback=topicname[0],
                     width="100%",
-                
+                    high_contrast=True,
+                    color_scheme="lime",
                 ),
                 side="top",
                 pb="current",
@@ -26,11 +27,13 @@ def Topic(topicname:str,
             rx.text(description, size="2"),
         ),
             rx.hstack(
-                rx.text(numofPosts),
-                rx.icon("view"),
+                rx.text(numofPosts,size="4"),
+                rx.icon("inbox"),
 
                 spacing="1",
                 justify="end",
+                margin_top="5vw",
+                align="center",
             ),
 
         
@@ -38,8 +41,6 @@ def Topic(topicname:str,
         max_width="32vw",
         min_width="30vw",
         size="5",
-        padding_bottom="5vw",
+        padding_bottom="2vw",
         margin="1vw 1vw 1vw 1vw",
-        spacing="5",
-
     )

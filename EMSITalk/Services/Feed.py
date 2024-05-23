@@ -8,4 +8,4 @@ class FeedState(rx.State):
     def getallfeed(self):
         Tget = get(rxconfig._backend_url+"/api/topic/")
 
-        self.Topics = {k: str(v) for k, v in Tget.json().items()}
+        self.Topics = Tget.json()#{k: str(v) for k, v in get.json().items()}
