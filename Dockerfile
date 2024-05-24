@@ -1,10 +1,13 @@
-FROM python:3.12
+FROM python:3.12-slim as p
+ENV PYTHONUNBUFFERED 1
 
 COPY .web /app
+COPY requirements.txt /app
+
 WORKDIR /app
 COPY . .
 
-RUN "./bin/pip install -r requirements.txt"
-CMD [ "./bin/python", "reflex", "run", "--loglevel debug" ]
+RUN "pip install -r requirements.txt"
+CMD [ "reflex", "run", "--loglevel debug" ]
 
 EXPOSE 3000

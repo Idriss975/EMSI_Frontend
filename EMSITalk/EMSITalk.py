@@ -1,7 +1,8 @@
 import reflex as rx
-from .Components import Header, Footer, Post, Topic
+from .Components import Header, Footer, Post, Topic, AddTopic
 from .Services import Authentication, Feed
 from .Services import Post as P
+
 
 
 from rxconfig import config
@@ -28,8 +29,17 @@ def login():
             rx.input(placeholder="Password", type="password", on_change=Authentication.LoginState.set_Password),
 
             rx.hover_card.root(
-                rx.hover_card.trigger(rx.text("Forgot password ?",size="1", _hover={"font-weight":"var(--font-weight-bold)"})),
-                rx.hover_card.content(rx.heading("Not yet implemented", size="2")),
+                rx.hover_card.trigger(rx.text("Forgot password ?",size="1", _hover={"fontWeight":"var(--font-weight-bold)"})),
+                rx.hover_card.content(
+                    rx.callout(
+                        "Not yet implemented.",
+                        icon="triangle_alert",
+                        color_scheme="red",
+                        role="alert",
+                    ),
+
+                    padding="0 0 0 0",
+                    ),
                 ),
                 
             
@@ -107,13 +117,41 @@ class FeedPageState(rx.State):
 
     
 @rx.page(route="feed", title="Home", on_load=Feed.FeedState.getallfeed)
-@rx.page(route="feed/[id]", title="Home",)
 def feed():
     return rx.flex(
         Header.header(),
-        rx.flex(
-            rx.foreach(Feed.FeedState.Topics, lambda x : Topic.Topic(x["name"], x["description"], x["numberOfPosts"])),
+        rx.cond(Authentication.LoginState.Logged_in == "true",
+            rx.hstack(
+                rx.heading("Add topic"),
+                AddTopic.AddTopic(),
 
+                justify="end",
+                margin_right="2vw",
+            )
+        ),
+       
+        rx.grid(
+            
+            rx.foreach(Feed.FeedState.Topics, lambda x : Topic.Topic(x["id"], x["name"], x["description"], x["numberOfPosts"])),
+            margin="2rem 2rem 0 2rem",
+            columns="3",
+        ),
+        Footer.footer(),
+
+        width="100%",
+        direction="column",
+        align="stretch",
+
+    )
+
+@rx.page(route="feed/[id]", title="Home",)
+def posts():
+    return rx.flex(
+        Header.header(),
+        
+       
+        rx.flex(
+            #Add posts
             margin_left="2rem",
             margin_right="2rem",
         ),

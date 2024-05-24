@@ -4,9 +4,10 @@ from reflex.style import color_mode
 
 
 
-def Topic(topicname:str,
-         description:str,
-         numofPosts:str)-> rx.Component:
+def Topic(id:int,
+        topicname:str,
+        description:str,
+        numofPosts:str)-> rx.Component:
 
 
     return rx.card(
@@ -25,6 +26,8 @@ def Topic(topicname:str,
             ),
             rx.heading(topicname, size="5"),
             rx.text(description, size="2"),
+
+            on_click=rx.redirect("feed/"+id),
         ),
             rx.hstack(
                 rx.text(numofPosts,size="4"),
